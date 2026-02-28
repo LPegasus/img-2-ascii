@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working on this project.
 
 ## Project Overview
 
@@ -12,16 +12,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Install dependencies
 npm install
 
-# Build TypeScript
+# Build
 npm run build
 
 # Run CLI
-node dist/bin/cli.js <image-path-or-url> [options]
+node dist/cli.js <image> [options]
 
-# Run in development mode
-npm start -- <image-path-or-url> [options]
+# Run in dev mode
+npm start -- <image> [options]
 
-# Run tests
+# Test
 npm test
 ```
 
@@ -29,66 +29,45 @@ npm test
 
 | Option | Description |
 |--------|-------------|
-| `-w, --width <number>` | Output width (default: auto-detect terminal width) |
+| `-w, --width <number>` | Output width |
 | `-c, --color` | Enable colored output |
 | `-i, --invert` | Invert brightness |
-| `-s, --charset <string>` | Custom character set (default: `@%#*+=-:. `) |
-
-## Examples
-
-```bash
-# Local file
-node dist/bin/cli.js ./photo.png
-node dist/bin/cli.js ./photo.png --width 80
-node dist/bin/cli.js ./photo.png --color
-node dist/bin/cli.js ./photo.png --color --invert
-
-# From URL
-node dist/bin/cli.js https://example.com/image.png
-```
+| `-s, --charset <string>` | Custom character set |
 
 ## Architecture
 
 ```
+bin/cli.ts           # CLI entry
 src/
-├── index.ts           # Main API exports
-├── image-loader.ts    # Load images from file/URL/buffer
-├── image-processor.ts # Resize, grayscale, get pixel data
-├── ascii-converter.ts # Convert pixels to ASCII characters
-├── color-renderer.ts  # Colored output with chalk
-└── terminal.ts       # Terminal width detection
-
-bin/
-└── cli.ts            # CLI entry point
-
-test/
-├── terminal.test.ts
-└── ascii-converter.test.ts
+├── index.ts        # Main API
+├── image-loader.ts # Load file/URL
+├── image-processor.ts # Resize, pixels
+├── ascii-converter.ts # To ASCII
+├── color-renderer.ts # Colors
+└── terminal.ts     # Terminal detection
 ```
 
 ## Key Modules
 
-### image-loader.ts
-- `loadFromFile(path)` - Load local image file
-- `loadFromUrl(url)` - Fetch image from URL (uses native fetch)
-- `loadImage(source)` - Auto-detect file or URL
-
 ### image-processor.ts
-- `resizeImage(image, width)` - Resize with 0.5 aspect ratio
-- `getPixelData(image, grayscale)` - Get RGBA pixel data (handles 1/3/4 channel images)
-- `processImage(image, width, grayscale)` - Main processing pipeline
+- Handles image resizing with aspect ratio 0.5
+- Converts any channel image (grayscale/RGB/RGBA) to RGBA
+- Critical: must handle 1/3/4 channel conversion properly
 
 ### ascii-converter.ts
-- `calculateBrightness(r, g, b)` - Calculate luminance: `0.299*R + 0.587*G + 0.114*B`
-- `convertToAscii(pixelData, options)` - Convert pixels to ASCII characters
+- `calculateBrightness(r, g, b)` - luminance formula
+- `convertToAscii(pixelData, options)` - main conversion
 
-### color-renderer.ts
-- `renderColored(pixelData, options)` - Render with ANSI RGB colors using chalk
+## Build
 
-## Tech Stack
+Uses tsup for bundling:
+- CLI: minified single file
+- Module: with sourcemap and .d.ts
 
-- **Language**: TypeScript
-- **Image Processing**: sharp
-- **CLI**: commander
-- **Colors**: chalk
-- **Testing**: Node.js built-in test module
+## Testing
+
+```bash
+npm test
+```
+
+Tests use Node.js built-in test module.

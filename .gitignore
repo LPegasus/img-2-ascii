@@ -35,3 +35,5 @@ dist/
 .npmrc
 
 *.tgz
+*.local.json
+*.local.md

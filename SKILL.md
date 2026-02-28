@@ -1,67 +1,82 @@
-# image-to-ascii Project Maintenance
+---
+name: image-to-ascii-cli
+description: Use when converting images to ASCII art or building CLI tools with image processing
+---
+
+# image-to-ascii CLI Tool
+
+## Overview
+Convert images to ASCII art in terminal. Built with TypeScript, sharp, commander, chalk.
+
+## When to Use
+- User asks to convert image to ASCII art
+- Building CLI tools that process images
+- Need to display images as text in terminal
+
+## Quick Start
+
+```bash
+# CLI usage
+node dist/cli.js ./photo.png
+node dist/cli.js ./photo.png --width 80
+node dist/cli.js ./photo.png --color
+node dist/cli.js https://example.com/image.png
+
+# As module
+import { fileToAscii, urlToAscii } from './dist/index.js';
+```
 
 ## Project Structure
 
+| File | Purpose |
+|------|---------|
+| `bin/cli.ts` | CLI entry point |
+| `src/index.ts` | Main API exports |
+| `src/image-loader.ts` | Load from file/URL |
+| `src/image-processor.ts` | Resize, grayscale, pixel data |
+| `src/ascii-converter.ts` | Pixels to ASCII chars |
+| `src/color-renderer.ts` | Colored output |
+| `src/terminal.ts` | Terminal width detection |
+
+## Key APIs
+
+```typescript
+// Load from file
+import { fileToAscii } from './dist/index.js';
+const result = await fileToAscii('./image.png', { width: 80, color: false });
+
+// Load from URL
+import { urlToAscii } from './dist/index.js';
+const result = await urlToAscii('https://example.com/image.png', options);
+
+// Result structure
+interface AsciiResult {
+  text: string;    // ASCII art string
+  width: number;  // pixel width
+  height: number; // pixel height
+}
 ```
-├── bin/cli.ts              # CLI entry point
-├── src/
-│   ├── index.ts           # Main API exports
-│   ├── image-loader.ts    # Load from file/URL
-│   ├── image-processor.ts # Resize, grayscale, pixel data
-│   ├── ascii-converter.ts# Pixels to ASCII chars
-│   ├── color-renderer.ts # Colored output with chalk
-│   └── terminal.ts       # Terminal width detection
-├── test/                  # Unit tests
-├── dist/                 # Build output
-├── tsup.config.ts        # Build configuration
-└── package.json
-```
 
-## Key Files to Modify
+## Options
 
-| Feature | Files to Modify |
-|---------|----------------|
-| CLI arguments | `bin/cli.ts` |
-| Image loading | `src/image-loader.ts` |
-| Image processing | `src/image-processor.ts` |
-| ASCII conversion | `src/ascii-converter.ts` |
-| Color output | `src/color-renderer.ts` |
-| Terminal detection | `src/terminal.ts` |
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `width` | number | auto | Output width |
+| `color` | boolean | false | Enable ANSI colors |
+| `invert` | boolean | false | Invert brightness |
+| `charset` | string | `@%#*+=-:. ` | Character set |
 
-## Build Commands
+## Build
 
 ```bash
-npm run build    # Build with tsup
-npm run start    # Run CLI in dev mode (tsx)
-npm test         # Run tests
+npm install
+npm run build    # outputs to dist/
+npm run start   # dev mode with tsx
+npm test        # run tests
 ```
 
-## Build Output
+## Common Issues
 
-- `dist/cli.js` - CLI executable
-- `dist/index.js` - Module for import
-- `dist/index.d.ts` - TypeScript definitions
+**Grayscale images show empty rows**: Check `src/image-processor.ts` - must handle channel conversion (1/3/4 channels).
 
-## Common Tasks
-
-### Add new CLI option
-1. Edit `bin/cli.ts` - add option with commander
-2. Pass to API in `src/index.ts`
-
-### Modify character set
-Edit default in `src/ascii-converter.ts`:
-```typescript
-const { charset = '@%#*+=-:. ' } = options;
-```
-
-### Fix image processing
-Check `src/image-processor.ts` - handles channel conversion (1/3/4 channels).
-
-## Dependencies
-
-| Package | Purpose |
-|---------|---------|
-| sharp | Image processing |
-| chalk | ANSI colors |
-| commander | CLI args |
-| tsup | Build tool |
+**Color mode height mismatch**: Ensure both color and grayscale modes use same pixel data pipeline.

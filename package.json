@@ -1,5 +1,5 @@
 {
-  "name": "@lp/image-to-ascii",
+  "name": "@lpegasus/image-to-ascii",
   "version": "1.0.0",
   "description": "Convert images to ASCII art",
   "type": "module",
@@ -17,7 +17,9 @@
     "img2ascii": "./dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "SKILL.md"
   ],
   "scripts": {
     "build": "tsup",
@@ -34,5 +36,8 @@
     "tsx": "^4.15.0",
     "tsup": "^8.0.0",
     "typescript": "^5.9.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -6,9 +6,11 @@ description: Use when converting images to ASCII art or building CLI tools with 
 # image-to-ascii CLI Tool
 
 ## Overview
+
 Convert images to ASCII art in terminal. Built with TypeScript, sharp, commander, chalk.
 
 ## When to Use
+
 - User asks to convert image to ASCII art
 - Building CLI tools that process images
 - Need to display images as text in terminal
@@ -17,54 +19,42 @@ Convert images to ASCII art in terminal. Built with TypeScript, sharp, commander
 
 ```bash
 # CLI usage
-node dist/cli.js ./photo.png
-node dist/cli.js ./photo.png --width 80
-node dist/cli.js ./photo.png --color
-node dist/cli.js https://example.com/image.png
+npx -y @lpegasus/image-to-ascii ./photo.png
+npx -y @lpegasus/image-to-ascii ./photo.png --width 80
+npx -y @lpegasus/image-to-ascii ./photo.png --color
+npx -y @lpegasus/image-to-ascii https://example.com/image.png --invert
 
 # As module
 import { fileToAscii, urlToAscii } from './dist/index.js';
 ```
 
-## Project Structure
-
-| File | Purpose |
-|------|---------|
-| `bin/cli.ts` | CLI entry point |
-| `src/index.ts` | Main API exports |
-| `src/image-loader.ts` | Load from file/URL |
-| `src/image-processor.ts` | Resize, grayscale, pixel data |
-| `src/ascii-converter.ts` | Pixels to ASCII chars |
-| `src/color-renderer.ts` | Colored output |
-| `src/terminal.ts` | Terminal width detection |
-
 ## Key APIs
 
 ```typescript
 // Load from file
-import { fileToAscii } from './dist/index.js';
-const result = await fileToAscii('./image.png', { width: 80, color: false });
+import { fileToAscii } from "@lpegasus/image-to-ascii";
+const result = await fileToAscii("./image.png", { width: 80, color: false });
 
 // Load from URL
-import { urlToAscii } from './dist/index.js';
-const result = await urlToAscii('https://example.com/image.png', options);
+import { urlToAscii } from "@lpegasus/image-to-ascii";
+const result = await urlToAscii("https://example.com/image.png", options);
 
 // Result structure
 interface AsciiResult {
-  text: string;    // ASCII art string
-  width: number;  // pixel width
+  text: string; // ASCII art string
+  width: number; // pixel width
   height: number; // pixel height
 }
 ```
 
 ## Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `width` | number | auto | Output width |
-| `color` | boolean | false | Enable ANSI colors |
-| `invert` | boolean | false | Invert brightness |
-| `charset` | string | `@%#*+=-:. ` | Character set |
+| Option    | Type    | Default      | Description        |
+| --------- | ------- | ------------ | ------------------ |
+| `width`   | number  | auto         | Output width       |
+| `color`   | boolean | false        | Enable ANSI colors |
+| `invert`  | boolean | false        | Invert brightness  |
+| `charset` | string  | `@%#*+=-:. ` | Character set      |
 
 ## Build
 

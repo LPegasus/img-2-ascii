@@ -2,6 +2,7 @@
   "name": "@lpegasus/image-to-ascii",
   "version": "1.0.0",
   "description": "Convert images to ASCII art",
+  "keywords": ["ascii", "art", "cli", "image", "terminal", "console", "convert"],
   "repository": {
     "type": "git",
     "url": "https://github.com/lpegasus/image-to-ascii"

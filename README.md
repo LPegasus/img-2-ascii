@@ -1,6 +1,6 @@
 <div style="display: grid; grid-auto-flow: column; justify-content: center; align-items: center; gap: 0; mix-inline-size: 200px">
-  <img src="./ori.jpg" alt="ori" style="min-inline-size: 200px;" />
-  <img src="./ori-ascii.jpg" alt="ori-ascii" style="min-inline-size: 200px;" />
+  <img src="https://raw.githubusercontent.com/LPegasus/img-2-ascii/refs/heads/main/ori.jpg" alt="ori" style="min-inline-size: 200px;" />
+  <img src="https://raw.githubusercontent.com/LPegasus/img-2-ascii/refs/heads/main/ori-ascii.jpg" alt="ori-ascii" style="min-inline-size: 200px;" />
 </div>
 
 # image-to-ascii

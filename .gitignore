@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build output (uncomment if you don't want to publish dist/)
+# dist/
+
+# Test fixtures (generated)
+test/fixtures/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+
+# Temporary files
+*.tmp
+*.temp
+
+package-lock.json
+dist/

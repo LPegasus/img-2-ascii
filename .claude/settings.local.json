@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm init:*)",
+      "Bash(npm test:*)",
+      "Bash(claude:*)",
+      "WebSearch",
+      "Bash(npm install:*)",
+      "Bash(git:*)",
+      "Bash(npx tsx:*)",
+      "Bash(rm:*)",
+      "Bash(node:*)",
+      "Bash(npm run:*)",
+      "Bash(npm start:*)",
+      "Bash(cp:*)"
+    ]
+  }
+}
